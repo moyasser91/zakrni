@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "209152794638",
+    "project_id": "zakrni-a3867",
+    "storage_bucket": "zakrni-a3867.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209152794638:android:2da6c768a97b70933c9c5f",
+        "android_client_info": {
+          "package_name": "com.example.zakrni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX8xkIhn3L4OTfJRCBwwvaacrg-jxm75c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

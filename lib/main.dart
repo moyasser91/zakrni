@@ -1,8 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:zakrni/home_screen.dart';
+import 'package:zakrni/constance/my_theme.dart';
+import 'package:zakrni/screen/home_screen.dart';
 
-void main()
-{
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, );
+  await FirebaseFirestore.instance.disableNetwork();
   runApp(MyApp());
 }
 
@@ -17,6 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName : (context) => HomeScreen(),
       },
+      theme: MyThemeData.lightTheme,
     );
   }
 }

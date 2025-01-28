@@ -16,20 +16,47 @@ class MyThemeData{
    unselectedItemColor: Colors.grey
   ),
   textTheme: TextTheme(
-   titleLarge: GoogleFonts.poppins(
+   titleLarge: GoogleFonts.cairo(
       color: MyColorApp.whiteColor,
     fontSize: 27,
     fontWeight: FontWeight.w500
    ),
-   titleMedium: GoogleFonts.poppins(
+   titleMedium: GoogleFonts.cairo(
           color: MyColorApp.blackColor,
           fontSize: 20,
    ),
-    titleSmall: GoogleFonts.alexandria(
+    titleSmall: GoogleFonts.cairo(
       color: MyColorApp.blackColor,
       fontSize: 20,
     ),
   )
   );
+ static final ThemeData darkTheme = ThemeData(
+     primaryColor: MyColorApp.primaryColordark,
+     scaffoldBackgroundColor: MyColorApp.backgroundLightColordark,
+     appBarTheme: AppBarTheme(
+         backgroundColor: MyColorApp.primaryColordark,
+         elevation: 0
+     ),
+     bottomNavigationBarTheme: BottomNavigationBarThemeData(
+         selectedItemColor: MyColorApp.primaryColordark,
+         unselectedItemColor: Colors.grey
+     ),
+     textTheme: TextTheme(
+       titleLarge: GoogleFonts.cairo(
+           color: MyColorApp.whiteColor,
+           fontSize: 27,
+           fontWeight: FontWeight.w500
+       ),
+       titleMedium: GoogleFonts.cairo(
+         color: MyColorApp.blackColor,
+         fontSize: 20,
+       ),
+       titleSmall: GoogleFonts.cairo(
+         color: MyColorApp.blackColor,
+         fontSize: 20,
+       ),
+     )
+ );
 
 }

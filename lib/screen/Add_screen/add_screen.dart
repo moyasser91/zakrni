@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zakrni/Logic/firebase/firebase_function.dart';
 import 'package:zakrni/constance/my_color.dart';
+import 'package:zakrni/data_model/data_task.dart';
+import 'package:zakrni/provider/list_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../provider/user_provider.dart';
+
 
 class AddScreen extends StatefulWidget {
 
@@ -12,22 +19,31 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   var formKey = GlobalKey<FormState>();
   static var selectedDateByUser = DateTime.now();
-  static final TextEditingController controllerText = TextEditingController();
+  String titleUser = ''  ;
+  String descriptionUser = ''  ;
+late ListProvider listProvider ;
+late UserProvider userProvider ;
 
   @override
   Widget build(BuildContext context) {
-  return SingleChildScrollView(
+    listProvider = Provider.of<ListProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
+
+    return SingleChildScrollView(
     child: Padding(
       padding: const EdgeInsets.only(left: 10,right: 10),
       child: Column(
         children: [
         SizedBox(height: 10,),
-        Center(child: Text("Add a New Task",style: Theme.of(context).textTheme.titleMedium,)),
+        Center(child: Text(AppLocalizations.of(context)!.add_new_task,style: Theme.of(context).textTheme.titleMedium,)),
         SizedBox(height: 40,),
         Form(
           key: formKey,
             child: Column(children: [
               TextFormField(
+                onChanged: (textValue) {
+                  titleUser = textValue ;
+                },
                 validator: (text) {
                   if(text == null || text.isEmpty)
                     {
@@ -39,7 +55,7 @@ class _AddScreenState extends State<AddScreen> {
                 maxLines: null,
                 minLines: 2,
                 decoration: InputDecoration(
-                  labelText: "Title",
+                  labelText: AppLocalizations.of(context)!.title,
                   labelStyle: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey.shade600,fontSize: 18),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
@@ -58,8 +74,10 @@ class _AddScreenState extends State<AddScreen> {
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 20),
               ),
               SizedBox(height: 25,),
-              TextFormField(
-
+              TextFormField( ///description
+                onChanged: (textValue) {
+                  descriptionUser = textValue ;
+                },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 minLines: 3,
@@ -71,7 +89,7 @@ class _AddScreenState extends State<AddScreen> {
                   return null ;
                 },
                 decoration: InputDecoration(
-                  labelText: "Description",
+                  labelText: AppLocalizations.of(context)!.description,
                   labelStyle: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey.shade600,fontSize: 18),
                   border: OutlineInputBorder(
 
@@ -97,7 +115,7 @@ class _AddScreenState extends State<AddScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Text('Select Date',style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 19,color: Colors.grey.shade800,fontWeight: FontWeight.normal),),
+                  Text(AppLocalizations.of(context)!.select_date,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 19,color: Colors.grey.shade800,fontWeight: FontWeight.normal),),
                   Text('${selectedDateByUser.day} / ${selectedDateByUser.month} / ${selectedDateByUser.year}',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 19,color: Colors.grey.shade800,fontWeight: FontWeight.normal),),
                 ],),
@@ -105,7 +123,9 @@ class _AddScreenState extends State<AddScreen> {
               SizedBox(height: 25,),
               InkWell(
                 onTap: () {
-                  addTask();
+                  addTaskAndCheckValidator();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Task Add Successfully') ));
+
                 },
                 child: Container(
                   width: double.infinity,
@@ -113,7 +133,7 @@ class _AddScreenState extends State<AddScreen> {
                   decoration: BoxDecoration(
                     color: Color(0xffaf9264),
                     borderRadius: BorderRadius.circular(12)                ),
-                  child: Center(child: Text("Create Task",style: Theme.of(context).textTheme.titleMedium?.copyWith(color: MyColorApp.whiteColor,fontSize: 22),)),
+                  child: Center(child: Text(AppLocalizations.of(context)!.create_task,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: MyColorApp.whiteColor,fontSize: 22),)),
                 ),
               )
 
@@ -124,14 +144,28 @@ class _AddScreenState extends State<AddScreen> {
   );
   }
 
-  void addTask()
+  void addTaskAndCheckValidator()
   {
     if(formKey.currentState?.validate()==true){
-      //add task
+      DataTask dataTask = DataTask(
+          title: titleUser,
+          description: descriptionUser,
+          dateTime: selectedDateByUser
+      );
+      FirebaseFunction.addTaskToFirebase(dataTask,userProvider.updateUserModel!.useriid!)
+          .then(
+        (value) {
+          listProvider.getAllTaskFromFirestore(userProvider.updateUserModel!.useriid!);
+
+        }).timeout(Duration(seconds: 2),onTimeout: () {
+        listProvider.getAllTaskFromFirestore(userProvider.updateUserModel!.useriid!);
+      },);
+
     }
+
   }
 
-  void showCalender()async{
+   void showCalender()async{
     var chosenUserDateSelected = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -139,7 +173,7 @@ class _AddScreenState extends State<AddScreen> {
         lastDate: DateTime.now().add(Duration(days: 10000)),
 
     );
-    selectedDateByUser = chosenUserDateSelected ?? selectedDateByUser ;
+     selectedDateByUser = chosenUserDateSelected ?? selectedDateByUser ;
     setState(() {
 
     });

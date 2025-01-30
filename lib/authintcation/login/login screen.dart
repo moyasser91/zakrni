@@ -1,13 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:zakrni/Logic/firebase/firebase_function.dart';
 import 'package:zakrni/authintcation/register/register_screen.dart';
 import 'package:zakrni/authintcation/register/text_form.dart';
 import 'package:zakrni/constance/my_color.dart';
-import 'package:zakrni/data_model/my_user_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../provider/user_provider.dart';
 import '../../screen/home_screen.dart';
@@ -78,7 +76,7 @@ bool isloadingfacebook = false;
                           if(emailValid==false){
                             return 'please Enter Valid ( @ - gmail.com) Email' ;
                           }
-                    
+
                           return null ;
                         },),
                       TextForm(

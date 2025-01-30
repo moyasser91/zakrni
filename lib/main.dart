@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:zakrni/provider/list_provider.dart';
 import 'package:zakrni/provider/user_provider.dart';
 import 'package:zakrni/screen/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:zakrni/screen/splash_screen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,11 +37,12 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:LoginScreen.routeName,
+    initialRoute: LoginScreen.routeName,
       routes: {
         HomeScreen.routeName : (context) => HomeScreen(),
         RegisterScreen.routeName : (context) => RegisterScreen(),
         LoginScreen.routeName : (context) => LoginScreen(),
+        SplashScreen.routeName : (context) => SplashScreen(),
       },
       locale: Locale(langugeprovider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -51,3 +54,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// home: AnimatedSplashScreen(
+// splashIconSize: 300,
+// splashTransition: SplashTransition.rotationTransition,
+// splash:CircleAvatar(
+// radius: 130,
+// backgroundImage: AssetImage("assets/images/splash.png"),),
+// nextScreen: LoginScreen()),

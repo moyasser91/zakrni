@@ -16,6 +16,7 @@ class TextForm extends StatelessWidget {
       validator: validatorUser,
       controller: myController,
       decoration: InputDecoration(
+labelStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14),
         labelText: hint,
         border: OutlineInputBorder(
             borderSide: BorderSide(width: 2,),

@@ -89,7 +89,7 @@ class _EditScreenState extends State<EditScreen> {
             child: Column(
               children: [
                 SizedBox(height: 10,),
-                Center(child: Text(AppLocalizations.of(context)!.edit_task, style: Theme
+                Center(child: Text(AppLocalizations.of(context)!.editTask, style: Theme
                     .of(context)
                     .textTheme
                     .titleMedium,)),
@@ -191,7 +191,7 @@ class _EditScreenState extends State<EditScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(AppLocalizations.of(context)!.select_date, style: Theme
+                            Text(AppLocalizations.of(context)!.selectDate, style: Theme
                                 .of(context)
                                 .textTheme
                                 .titleSmall
@@ -213,7 +213,7 @@ class _EditScreenState extends State<EditScreen> {
                         onTap: () {
                           updateTask();
                          listProvider.getAllTaskFromFirestore(userProvider.updateUserModel!.useriid!);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Task upDated Successfully') ));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.taskUpdatedSuccessfully) ));
                           setState(() {
 
                           });
@@ -225,7 +225,7 @@ class _EditScreenState extends State<EditScreen> {
                           decoration: BoxDecoration(
                               color: Color(0xffaf9264),
                               borderRadius: BorderRadius.circular(12)),
-                          child: Center(child: Text(AppLocalizations.of(context)!.update_task, style: Theme
+                          child: Center(child: Text(AppLocalizations.of(context)!.updateTask, style: Theme
                               .of(context)
                               .textTheme
                               .titleMedium

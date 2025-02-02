@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 class AppLocalization extends ChangeNotifier{
 
-  String appLanguage = 'en' ;
+  String appLanguage = 'ar' ;
   ThemeMode appTheme = ThemeMode.light ;
 
   void changeLanguage(String newLanguage)

@@ -38,7 +38,7 @@ bool isloadingfacebook = false;
           
               SizedBox(height:MediaQuery.of(context).size.height*.06,),
           
-                 Text(AppLocalizations.of(context)!.login_your_acc,style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black,fontSize: 24)),
+                 Text(AppLocalizations.of(context)!.loginYourAcc,style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black,fontSize: 24)),
               SizedBox(height:MediaQuery.of(context).size.height*.004,),
               Row(
                 children: [
@@ -68,13 +68,13 @@ bool isloadingfacebook = false;
                         keyboardType: TextInputType.emailAddress,
                         validatorUser: (textValue) {
                           if(textValue == null || textValue.trim().isEmpty){
-                            return "Please Enter Your Email" ;
+                            return AppLocalizations.of(context)!.pleaseEnterYourEmail ;
                           }
                           final bool emailValid =
                           RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
                               .hasMatch(textValue);
                           if(emailValid==false){
-                            return 'please Enter Valid ( @ - gmail.com) Email' ;
+                            return AppLocalizations.of(context)!.pleaseEnterValid ;
                           }
 
                           return null ;
@@ -84,11 +84,11 @@ bool isloadingfacebook = false;
                         myController: passwordController,
                         validatorUser: (textValue) {
                           if(textValue == null || textValue.trim().isEmpty){
-                            return "Please Enter Your Password" ;
+                            return AppLocalizations.of(context)!.pleaseEnterYourPassword ;
                           }
                           if(textValue.length < 5  )
                           {
-                            return "Please Enter Larger Than 5 Character" ;
+                            return AppLocalizations.of(context)!.pleaseEnterLargerThan5Character ;
                           }
                           return null ;
                         },),
@@ -96,6 +96,45 @@ bool isloadingfacebook = false;
                     ],),
                 ),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.01,
+              ),
+              InkWell(
+                onTap: () async{
+                  if (emailController.text == null || emailController.text.isEmpty) {
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: AppLocalizations.of(context)!.error,
+                    titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+
+                    desc: AppLocalizations.of(context)!.pleaseEnterYourEmail,
+                    descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
+                  ).show();
+                  setState(() {
+
+                  });
+                }else
+                  {
+                    await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+                    AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.info,
+                        animType: AnimType.rightSlide,
+                        //title: AppLocalizations.of(context)!.error,
+                        titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+
+                        desc: AppLocalizations.of(context)!.sendMeassgeInEmail,
+                        descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16)
+                    ).show();
+                    setState(() {
+
+                    });
+                  }
+
+                  },
+                  child: Text(AppLocalizations.of(context)!.forgetPass,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14),)),
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.05,
               ),
@@ -114,7 +153,7 @@ bool isloadingfacebook = false;
                     child: isloadinglogin?CircularProgressIndicator(
                       color: Colors.white,
                     ):Text(
-                      AppLocalizations.of(context)!.login_button,
+                      AppLocalizations.of(context)!.loginButton,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20),
                     ),
                   ),
@@ -129,7 +168,7 @@ bool isloadingfacebook = false;
               //       style: TextStyle(fontSize: 16, color: Colors.black45),
               //     )),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.2,
+                height: MediaQuery.of(context).size.height*0.1,
               ),
               // InkWell(
               //   onTap: () {
@@ -192,11 +231,11 @@ bool isloadingfacebook = false;
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.dont_have_acc,
+                        AppLocalizations.of(context)!.dontHaveAcc,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15,color: Colors.grey.shade600 ),
                       ),
                       Text(
-                        AppLocalizations.of(context)!.dont_have_acc_regis,
+                        AppLocalizations.of(context)!.dontHaveAccRegis,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15,  color: MyColorApp.primaryColor,
                         ),
           
@@ -228,7 +267,7 @@ bool isloadingfacebook = false;
           userProvider.updateUser(user);  // تمرير كائن MyUserModel هنا
 
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Login Successfully') ));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.loginSuccessfully) ));
         print(credential.user?.uid);
         Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       } on FirebaseAuthException catch (e) {
@@ -242,9 +281,10 @@ bool isloadingfacebook = false;
             dialogType: DialogType.error,
             animType: AnimType.rightSlide,
             title: 'Error',
-            titleTextStyle: TextStyle(color: Colors.black),
+            titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
 
-            desc: 'No user found for that email.',
+            desc: AppLocalizations.of(context)!.noUserFoundForThatEmail,
+            descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
           ).show();
           print('No user found dialog shown -------- ');
         }
@@ -257,8 +297,9 @@ bool isloadingfacebook = false;
             dialogType: DialogType.error,
             animType: AnimType.rightSlide,
             title: 'Error',
-            titleTextStyle: TextStyle(color: Colors.black),
-            desc: 'Wrong password provided for that user.',
+            titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+            desc: AppLocalizations.of(context)!.wrongPasswordProvidedForThatUser,
+            descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
           ).show();
           print('Wrong password dialog shown');
         }
@@ -271,8 +312,9 @@ bool isloadingfacebook = false;
             dialogType: DialogType.warning,
             animType: AnimType.rightSlide,
             title: 'Error',
-            titleTextStyle: TextStyle(color: Colors.black),
-            desc: 'No internet Connection',
+            titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+            desc: AppLocalizations.of(context)!.noInternetConnection,
+            descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
           ).show();
           print('Wrong password dialog shown');
         }
@@ -287,8 +329,8 @@ bool isloadingfacebook = false;
           dialogType: DialogType.error,
           animType: AnimType.rightSlide,
           title: 'Error',
-          titleTextStyle: TextStyle(color: Colors.black),
-
+          titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 13),
           desc: e.toString(),
         ).show();
       }

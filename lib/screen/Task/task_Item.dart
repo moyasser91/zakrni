@@ -54,7 +54,7 @@ class _TaskItemState extends State<TaskItem> {
             listProvider.getAllTaskFromFirestore(userProvider.updateUserModel!.useriid!);
           },
       );
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.delete_sucsuss) ));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.deleteSucsuss) ));
     },
     backgroundColor: Color(0xFFFE4A49),
     foregroundColor: Colors.white,
@@ -125,7 +125,7 @@ class _TaskItemState extends State<TaskItem> {
 
                       });
                     },
-                      child: widget.dataTask.isDone==true?Center(child: Text(AppLocalizations.of(context)!.is_done,style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),)):Icon(Icons.check,color: Colors.white,size: 25,)),
+                      child: widget.dataTask.isDone==true?Center(child: Text(AppLocalizations.of(context)!.isDone,style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),)):Icon(Icons.check,color: Colors.white,size: 25,)),
                 ),
               ],),
             ),

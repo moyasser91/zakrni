@@ -35,7 +35,7 @@ late UserProvider userProvider ;
       child: Column(
         children: [
         SizedBox(height: 10,),
-        Center(child: Text(AppLocalizations.of(context)!.add_new_task,style: Theme.of(context).textTheme.titleMedium,)),
+        Center(child: Text(AppLocalizations.of(context)!.addNewTask,style: Theme.of(context).textTheme.titleMedium,)),
         SizedBox(height: 40,),
         Form(
           key: formKey,
@@ -47,7 +47,7 @@ late UserProvider userProvider ;
                 validator: (text) {
                   if(text == null || text.isEmpty)
                     {
-                      return "please Enter Title text";
+                      return AppLocalizations.of(context)!.pleaseEnterTitleText;
                     }
                   return null ;
                 },
@@ -84,7 +84,7 @@ late UserProvider userProvider ;
                 validator: (text) {
                   if(text == null || text.isEmpty)
                   {
-                    return "please Enter Description text";
+                    return AppLocalizations.of(context)!.pleaseEnterDescriptionText;
                   }
                   return null ;
                 },
@@ -115,7 +115,7 @@ late UserProvider userProvider ;
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Text(AppLocalizations.of(context)!.select_date,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 19,color: Colors.grey.shade800,fontWeight: FontWeight.normal),),
+                  Text(AppLocalizations.of(context)!.selectDate,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 19,color: Colors.grey.shade800,fontWeight: FontWeight.normal),),
                   Text('${selectedDateByUser.day} / ${selectedDateByUser.month} / ${selectedDateByUser.year}',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 19,color: Colors.grey.shade800,fontWeight: FontWeight.normal),),
                 ],),
@@ -124,7 +124,7 @@ late UserProvider userProvider ;
               InkWell(
                 onTap: () {
                   addTaskAndCheckValidator();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Task Add Successfully') ));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.taskAddSuccessfully) ));
 
                 },
                 child: Container(
@@ -133,7 +133,7 @@ late UserProvider userProvider ;
                   decoration: BoxDecoration(
                     color: Color(0xffaf9264),
                     borderRadius: BorderRadius.circular(12)                ),
-                  child: Center(child: Text(AppLocalizations.of(context)!.create_task,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: MyColorApp.whiteColor,fontSize: 22),)),
+                  child: Center(child: Text(AppLocalizations.of(context)!.createTask,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: MyColorApp.whiteColor,fontSize: 22),)),
                 ),
               )
 

@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment:CrossAxisAlignment.start,
             children: [
               SizedBox(height:MediaQuery.of(context).size.height*.06,),
-              Text(AppLocalizations.of(context)!.register_new_acc,style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black,fontSize: 24)),
+              Text(AppLocalizations.of(context)!.registerNewAcc,style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black,fontSize: 24)),
               SizedBox(height:MediaQuery.of(context).size.height*.008,),
               Row(
                 children: [
@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.name,
                     validatorUser: (textValue) {
                       if(textValue == null || textValue.trim().isEmpty){
-                        return "Please Enter Your Name" ;
+                        return AppLocalizations.of(context)!.pleaseEnterYourName ;
                       }
                         return null ;
                     },),
@@ -85,14 +85,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.emailAddress,
                     validatorUser: (textValue) {
                       if(textValue == null || textValue.trim().isEmpty){
-                        return "Please Enter Your Email" ;
+                        return AppLocalizations.of(context)!.pleaseEnterYourEmail ;
                       }
                       final bool emailValid =
                       RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
                           .hasMatch(textValue);
 
                       if(emailValid==false){
-                        return 'please Enter Valid ( @ - gmail.com) Email' ;
+                        return AppLocalizations.of(context)!.pleaseEnterValid ;
                       }
 
                       return null ;
@@ -102,21 +102,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     myController: passwordController,
                     validatorUser: (textValue) {
                       if(textValue == null || textValue.trim().isEmpty){
-                        return "Please Enter Your Password" ;
+                        return AppLocalizations.of(context)!.pleaseConfirmPassword ;
                       }
                       if(textValue.length < 5  )
                         {
-                          return "Please Enter Larger Than 5 Character" ;
+                          return AppLocalizations.of(context)!.pleaseEnterLargerThan5Character ;
                         }
                       return null ;
                     },),
                   TextForm(
-                      hint: AppLocalizations.of(context)!.confirm_pass,
+                      hint: AppLocalizations.of(context)!.confirmPass,
                       myController: confirmPassController,
                       validatorUser: (textValue) {
                         if(textValue == null)
                           {
-                            return "Please Confirm Password" ;
+                            return AppLocalizations.of(context)!.pleaseConfirmPassword ;
                           }
                       },),
                 ],),
@@ -135,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   child: Center(child: isloading?CircularProgressIndicator(
                     color: Colors.white,
-                  ): Text(AppLocalizations.of(context)!.register_button,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white,fontSize: 20),)),
+                  ): Text(AppLocalizations.of(context)!.registerButton,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white,fontSize: 20),)),
                 ),
               ),
               // SizedBox(
@@ -204,8 +204,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(AppLocalizations.of(context)!.have_acc, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15,color: Colors.grey.shade600 ),),
-                    Text(AppLocalizations.of(context)!.have_acc_login, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15,color:MyColorApp.primaryColor),),
+                    Text(AppLocalizations.of(context)!.haveAcc, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15,color: Colors.grey.shade600 ),),
+                    Text(AppLocalizations.of(context)!.haveAccLogin, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15,color:MyColorApp.primaryColor),),
 
                   ],
                 ),
@@ -235,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         var userProvider = Provider.of<UserProvider>(context,listen: false);
           userProvider.updateUser(myUserModel);
         await FirebaseFunction.addUserToFirestore(myUserModel);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.register_sucsuss) ));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(AppLocalizations.of(context)!.registerSucsuss) ));
         print(credential.user?.uid ??'');
         Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       } on FirebaseAuthException catch (e) {
@@ -248,13 +248,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             dialogType: DialogType.warning,
             animType: AnimType.rightSlide,
             title: 'warning',
-            titleTextStyle: TextStyle(color: Colors.black),
-            desc:'The password provided is too weak.',
+            titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+            desc:AppLocalizations.of(context)!.thePasswordProvidedIsTooWeak,
+            descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
           ).show();
           setState(() {
 
           });
-        } else if (e.code == 'email-already-in-use') {
+        } else if (e.code == AppLocalizations.of(context)!.emailAlreadyInUse) {
           setState(() {
             isloading = false ;
           });
@@ -263,8 +264,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             dialogType: DialogType.warning,
             animType: AnimType.rightSlide,
             title: 'warning',
-            titleTextStyle: TextStyle(color: Colors.black),
-            desc:'The account already exists for that email.',
+            titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+            desc:AppLocalizations.of(context)!.theAccountAlreadyExistsForThatEmail,
+            descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
           ).show();
           setState(() {
 
@@ -279,8 +281,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             dialogType: DialogType.warning,
             animType: AnimType.rightSlide,
             title: 'Warning',
-            titleTextStyle: TextStyle(color: Colors.black),
-            desc: 'No internet Connection',
+            titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
+            desc: AppLocalizations.of(context)!.noInternetConnection,
+            descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)
           ).show();
           print('Wrong password dialog shown');
         }
@@ -293,8 +296,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           dialogType: DialogType.error,
           animType: AnimType.rightSlide,
           title: 'Error',
-          titleTextStyle: TextStyle(color: Colors.black),
+          titleTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 16),
           desc: e.toString(),
+          descTextStyle:  Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 13)
         ).show();
       }
     }else{

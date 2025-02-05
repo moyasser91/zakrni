@@ -134,7 +134,7 @@ bool isloadingfacebook = false;
                   }
 
                   },
-                  child: Text(AppLocalizations.of(context)!.forgetPass,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14),)),
+                  child: Text(AppLocalizations.of(context)!.forgetPass,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14,color: MyColorApp.primaryColor),)),
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.05,
               ),
